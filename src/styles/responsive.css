@@ -148,3 +148,22 @@ button.loading::after {
         transform: rotate(360deg);
     }
 }
+
+/* Bio Section Responsive Fix */
+@media (max-width: 768px) {
+    #bio .container {
+        flex-direction: column;
+        gap: 2rem;
+    }
+
+    .bio-text,
+    .bio-image-container {
+        max-width: 100%;
+        flex: 1 1 100%;
+    }
+
+    .bio-image-container {
+        margin-top: 2rem;
+        order: -1; /* Move image above text on mobile */
+    }
+}
