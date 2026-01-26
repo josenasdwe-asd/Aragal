@@ -1,0 +1,17 @@
+
+<svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect x="0" y="0" width="200" height="200" fill="#111" />
+  
+  <!-- Outer Ring (Gold) -->
+  <circle cx="100" cy="100" r="90" stroke="#d4af37" stroke-width="5" fill="none" />
+  
+  <!-- Inner Detail -->
+  <circle cx="100" cy="100" r="40" fill="#222" />
+  
+  <!-- Text -->
+  <text x="50%" y="50%" text-anchor="middle" dy=".3em" fill="#d4af37" font-family="Arial" font-size="24" font-weight="bold">ARAGAL</text>
+  
+  <!-- Visualizer Lines -->
+  <path d="M20 100 Q 60 40 100 100 T 180 100" stroke="#d4af37" stroke-width="2" fill="none" opacity="0.5"/>
+</svg>
