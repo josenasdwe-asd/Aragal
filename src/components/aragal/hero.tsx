@@ -25,11 +25,35 @@ export function Hero() {
   // Retry on interaction (first click/tap) as a fallback.
   // The video file itself is a ping-pong (forward + reverse concatenated),
   // so a normal loop produces a seamless bounce with no visible cut.
+  // Video sources are lazy-loaded: only set when the hero is visible
+  // (saves 3.9MB on initial load if the user lands mid-page).
   useEffect(() => {
     const v = videoRef.current;
     if (!v) return;
+
+    // Lazy-load: inject sources only when hero is in viewport
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0]?.isIntersecting) {
+          // Inject the appropriate source based on screen size
+          const isMobile = window.innerWidth <= 767;
+          const source = document.createElement("source");
+          source.src = isMobile
+            ? "/assets/video/hero-loop-mobile-v2.mp4"
+            : "/assets/video/hero-loop.mp4";
+          source.type = "video/mp4";
+          v.appendChild(source);
+          v.load(); // trigger load with the new source
+          v.play().catch(() => {});
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.1 }
+    );
+    observer.observe(v);
+
     const tryPlay = () => {
-      if (v.paused) v.play().catch(() => {});
+      if (v.paused && v.readyState >= 2) v.play().catch(() => {});
     };
     tryPlay();
     const onInteract = () => {
@@ -40,6 +64,7 @@ export function Hero() {
     window.addEventListener("click", onInteract, { once: true });
     window.addEventListener("touchstart", onInteract, { once: true });
     return () => {
+      observer.disconnect();
       window.removeEventListener("click", onInteract);
       window.removeEventListener("touchstart", onInteract);
     };
@@ -91,15 +116,13 @@ export function Hero() {
         muted
         loop
         playsInline
-        preload="auto"
+        preload="none"
         className="absolute inset-0 h-full w-full object-cover object-center"
         poster="/assets/images/hero-bg.webp"
         aria-hidden="true"
       >
-        {/* CSS media query picks the right source: vertical for mobile,
-            horizontal for desktop. */}
-        <source src="/assets/video/hero-loop-mobile-v2.mp4" type="video/mp4" media="(max-width: 767px)" />
-        <source src="/assets/video/hero-loop.mp4" type="video/mp4" />
+        {/* Sources are set dynamically by the IntersectionObserver below
+            to lazy-load the video only when the hero is visible. */}
       </video>
       {/* Hidden img for SEO/alt text (the video poster handles the visual) */}
       <img

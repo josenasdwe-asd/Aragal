@@ -4,6 +4,7 @@ import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
 import { ThemeProvider } from "@/components/theme-provider";
 import { StructuredData } from "@/components/aragal/structured-data";
+import { Analytics } from "@vercel/analytics/next";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -50,6 +51,14 @@ export const metadata: Metadata = {
     locale: "es_ES",
     type: "website",
     images: [{ url: "/assets/images/bio.jpg", width: 1200, height: 630 }],
+    videos: [
+      {
+        url: "https://marioaravena.cl/assets/video/hero-loop.mp4",
+        width: 1920,
+        height: 1080,
+        type: "video/mp4",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
@@ -84,6 +93,7 @@ export default function RootLayout({
           <Toaster />
         </ThemeProvider>
         <StructuredData />
+        <Analytics />
       </body>
     </html>
   );
