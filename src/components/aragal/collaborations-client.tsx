@@ -75,7 +75,8 @@ export function CollaborationsClient({ items }: Props) {
                         alt={`Foto de ${c.name}`}
                         fill
                         className="object-cover"
-                        sizes="64px"
+                        sizes="96px"
+                        unoptimized
                       />
                     ) : (
                       <ArtistAvatar name={c.name} />
