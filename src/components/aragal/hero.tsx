@@ -50,9 +50,10 @@ export function Hero() {
       id="inicio"
       className="relative flex min-h-[100dvh] items-center overflow-hidden bg-black"
     >
-      {/* Full-screen background video — plays on ALL devices (desktop + mobile).
-          The poster image shows while the video loads. muted + playsInline
-          ensure autoplay works on iOS Safari. */}
+      {/* Full-screen background video — plays on ALL devices.
+          Mobile uses a vertical (9:16) version so the artist is fully visible;
+          desktop uses the horizontal (16:9) version. Both are slow-motion
+          ping-pong loops. */}
       <video
         ref={videoRef}
         autoPlay
@@ -60,10 +61,13 @@ export function Hero() {
         loop
         playsInline
         preload="auto"
-        className="absolute inset-0 h-full w-full object-cover object-left sm:object-center"
+        className="absolute inset-0 h-full w-full object-cover object-center"
         poster="/assets/images/hero-bg.webp"
         aria-hidden="true"
       >
+        {/* CSS media query picks the right source: vertical for mobile,
+            horizontal for desktop. */}
+        <source src="/assets/video/hero-loop-mobile.mp4" type="video/mp4" media="(max-width: 767px)" />
         <source src="/assets/video/hero-loop.mp4" type="video/mp4" />
       </video>
       {/* Hidden img for SEO/alt text (the video poster handles the visual) */}
