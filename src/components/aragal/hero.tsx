@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import Image from "next/image";
 import { ChevronDown } from "lucide-react";
 
 const SUBTITLES = [
@@ -51,29 +50,27 @@ export function Hero() {
       id="inicio"
       className="relative flex min-h-[100dvh] items-center overflow-hidden bg-black"
     >
-      {/* Full-screen background — video loop (Ken Burns + grain) on desktop,
-          static image on mobile (video too heavy for cellular). */}
+      {/* Full-screen background video — plays on ALL devices (desktop + mobile).
+          The poster image shows while the video loads. muted + playsInline
+          ensure autoplay works on iOS Safari. */}
       <video
         ref={videoRef}
         autoPlay
         muted
         loop
         playsInline
+        preload="auto"
         className="absolute inset-0 h-full w-full object-cover object-left sm:object-center"
         poster="/assets/images/hero-bg.webp"
         aria-hidden="true"
       >
         <source src="/assets/video/hero-loop.mp4" type="video/mp4" />
       </video>
-      {/* Static image fallback for mobile (shown via poster + hidden video) */}
-      <Image
+      {/* Hidden img for SEO/alt text (the video poster handles the visual) */}
+      <img
         src="/assets/images/hero-bg.webp"
         alt="Mario Aravena, compositor chileno, con guitarra acústica"
-        fill
-        priority
-        unoptimized
-        className="object-cover object-left sm:object-center md:hidden"
-        sizes="100vw"
+        className="sr-only"
       />
       {/* Dark gradient overlay — on mobile (single column), a bottom-to-top
           gradient keeps the artist visible while darkening the lower area
