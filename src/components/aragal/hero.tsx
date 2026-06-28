@@ -45,6 +45,37 @@ export function Hero() {
     };
   }, []);
 
+  // Magnetic buttons — attract towards cursor on hover
+  useEffect(() => {
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduceMotion) return;
+    const magnets = document.querySelectorAll<HTMLElement>("[data-magnetic]");
+    const handlers: Array<{ el: HTMLElement; move: (e: MouseEvent) => void; leave: () => void }> = [];
+
+    magnets.forEach((el) => {
+      const move = (e: MouseEvent) => {
+        const rect = el.getBoundingClientRect();
+        const x = e.clientX - rect.left - rect.width / 2;
+        const y = e.clientY - rect.top - rect.height / 2;
+        el.style.transform = `translate(${x * 0.25}px, ${y * 0.25}px)`;
+      };
+      const leave = () => {
+        el.style.transform = "translate(0, 0)";
+      };
+      el.style.transition = "transform 0.3s ease-out";
+      el.addEventListener("mousemove", move);
+      el.addEventListener("mouseleave", leave);
+      handlers.push({ el, move, leave });
+    });
+
+    return () => {
+      handlers.forEach(({ el, move, leave }) => {
+        el.removeEventListener("mousemove", move);
+        el.removeEventListener("mouseleave", leave);
+      });
+    };
+  }, []);
+
   return (
     <section
       id="inicio"
@@ -202,12 +233,12 @@ export function Hero() {
             La música donde la emoción se convierte en eternidad.
           </blockquote>
 
-          {/* CTA buttons */}
+          {/* CTA buttons — magnetic effect on hover */}
           <div className="flex flex-wrap gap-3">
-            <a href="#musica" className="btn-gold focus-gold">
+            <a href="#musica" className="btn-gold focus-gold magnetic-btn" data-magnetic>
               Escuchar Ahora
             </a>
-            <a href="#bio" className="btn-outline-gold focus-gold">
+            <a href="#bio" className="btn-outline-gold focus-gold magnetic-btn" data-magnetic>
               Conoce Mi Historia
             </a>
           </div>
