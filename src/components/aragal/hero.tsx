@@ -92,13 +92,13 @@ export function Hero() {
         loop
         playsInline
         preload="auto"
-        className="absolute inset-0 h-full w-full object-cover object-center"
+        className="absolute inset-0 h-full w-full object-cover object-left md:object-center"
         poster="/assets/images/hero-bg.webp"
         aria-hidden="true"
       >
         {/* CSS media query picks the right source: vertical for mobile,
             horizontal for desktop. */}
-        <source src="/assets/video/hero-loop-mobile-v2.mp4" type="video/mp4" media="(max-width: 1023px)" />
+        <source src="/assets/video/hero-loop-mobile-v2.mp4" type="video/mp4" media="(max-width: 767px)" />
         <source src="/assets/video/hero-loop.mp4" type="video/mp4" />
       </video>
       {/* Hidden img for SEO/alt text (the video poster handles the visual) */}
