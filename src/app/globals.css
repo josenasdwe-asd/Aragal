@@ -1,0 +1,591 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-inter);
+  --font-display: var(--font-display);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+
+  /* ARAGAL brand tokens */
+  --color-gold: var(--gold);
+  --color-gold-soft: var(--gold-soft);
+  --color-ink: var(--ink);
+}
+
+:root {
+  --radius: 0.75rem;
+
+  /* shadcn base */
+  --background: oklch(0.985 0.005 85);
+  --foreground: oklch(0.18 0.01 60);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.18 0.01 60);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.18 0.01 60);
+  --primary: oklch(0.205 0.01 60);
+  --primary-foreground: oklch(0.985 0 0);
+  --secondary: oklch(0.96 0.01 85);
+  --secondary-foreground: oklch(0.205 0.01 60);
+  --muted: oklch(0.96 0.005 85);
+  --muted-foreground: oklch(0.45 0.01 60);
+  --accent: oklch(0.97 0.005 85);
+  --accent-foreground: oklch(0.205 0.01 60);
+  --destructive: oklch(0.577 0.245 27.325);
+  --border: oklch(0.9 0.01 85);
+  --input: oklch(0.9 0.01 85);
+  --ring: var(--gold);
+  --chart-1: oklch(0.646 0.222 41.116);
+  --chart-2: oklch(0.6 0.118 184.704);
+  --chart-3: oklch(0.398 0.07 227.392);
+  --chart-4: oklch(0.828 0.189 84.429);
+  --chart-5: oklch(0.769 0.188 70.08);
+  --sidebar: oklch(0.985 0 0);
+  --sidebar-foreground: oklch(0.145 0 0);
+  --sidebar-primary: oklch(0.205 0 0);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.97 0 0);
+  --sidebar-accent-foreground: oklch(0.205 0 0);
+  --sidebar-border: oklch(0.922 0 0);
+  --sidebar-ring: oklch(0.708 0 0);
+
+  /* ARAGAL palette — Tinta, Son y Fe.
+     Light mode uses a darker gold (#a67c00) for sufficient contrast on
+     light backgrounds (WCAG AA). Dark mode overrides to the vibrant gold. */
+  --gold: #a67c00;
+  --gold-soft: #8a6600;
+  --terracota: #c87f4a;
+  --terracota-soft: #9c5a2e;
+  --pergamino: #f5efe0;
+  --ink: #0a0a0a;
+
+  --glass-bg: rgba(255, 255, 255, 0.08);
+  --glass-border: rgba(0, 0, 0, 0.08);
+}
+
+.dark {
+  --background: oklch(0.12 0.005 60);
+  --foreground: oklch(0.985 0.005 85);
+  --card: oklch(0.16 0.006 60);
+  --card-foreground: oklch(0.985 0.005 85);
+  --popover: oklch(0.16 0.006 60);
+  --popover-foreground: oklch(0.985 0.005 85);
+  --primary: oklch(0.985 0.005 85);
+  --primary-foreground: oklch(0.205 0.01 60);
+  --secondary: oklch(0.2 0.006 60);
+  --secondary-foreground: oklch(0.985 0.005 85);
+  --muted: oklch(0.2 0.006 60);
+  --muted-foreground: oklch(0.72 0.008 85);
+  --accent: oklch(0.24 0.006 60);
+  --accent-foreground: oklch(0.985 0.005 85);
+  --destructive: oklch(0.704 0.191 22.216);
+  --border: oklch(1 0 0 / 12%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: var(--gold);
+
+  /* Dark mode: vibrant gold (contrasts well on dark backgrounds) */
+  --gold: #d4af37;
+  --gold-soft: #b8860b;
+
+  --glass-bg: rgba(255, 255, 255, 0.05);
+  --glass-border: rgba(255, 255, 255, 0.1);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+  /* Premium section reveal: subtle fade-in on scroll for sections.
+     Uses CSS animation (no JS, no flicker). */
+  section {
+    animation: section-fade-in 0.7s ease-out both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 30%;
+  }
+  @keyframes section-fade-in {
+    from { opacity: 0.4; }
+    to { opacity: 1; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    section { animation: none; }
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-family: var(--font-inter), sans-serif;
+    line-height: 1.6;
+    overflow-x: hidden;
+    min-height: 100vh;
+    transition: background-color 0.5s ease, color 0.5s ease;
+    background-image:
+      radial-gradient(circle at 15% 50%, color-mix(in srgb, var(--gold) 8%, transparent), transparent 25%),
+      radial-gradient(circle at 85% 30%, color-mix(in srgb, var(--gold) 5%, transparent), transparent 25%);
+    position: relative;
+  }
+  /* Subtle paper grain texture overlay for depth — purely decorative */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    opacity: 0.035;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E");
+    mix-blend-mode: overlay;
+  }
+  ::selection {
+    background: var(--gold);
+    color: var(--ink);
+  }
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display), serif;
+    font-weight: 600;
+    line-height: 1.15;
+    letter-spacing: 0.01em;
+  }
+}
+
+/* ============ ARAGAL custom utilities ============ */
+@layer components {
+  .aragal-container {
+    @apply mx-auto w-full max-w-6xl px-4 sm:px-6;
+  }
+
+  /* Glassmorphism */
+  .glass {
+    background: var(--glass-bg);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-xl);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  }
+
+  /* Gold gradient text */
+  .gold-text {
+    background: linear-gradient(135deg, var(--gold) 0%, #fff 30%, var(--gold) 55%, #fff 80%, var(--gold) 100%);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: gold-shine 6s linear infinite;
+  }
+
+  .gold-text-static {
+    background: linear-gradient(135deg, var(--gold) 0%, #fcfaf0 50%, var(--gold-soft) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .section-eyebrow {
+    @apply mb-3 inline-block text-xs font-semibold uppercase tracking-[0.35em];
+    color: var(--gold);
+  }
+
+  .section-title {
+    @apply text-center text-3xl sm:text-4xl lg:text-5xl font-bold;
+    position: relative;
+    display: inline-block;
+  }
+  .section-title::after {
+    content: "";
+    display: block;
+    height: 2px;
+    width: 84px;
+    background: linear-gradient(to right, transparent, var(--gold), transparent);
+    margin: 1.25rem auto 0;
+  }
+
+  /* Drop cap — elegant initial letter for prose */
+  .drop-cap::first-letter {
+    float: left;
+    font-family: var(--font-display), serif;
+    font-size: 3.6rem;
+    line-height: 0.85;
+    font-weight: 700;
+    margin: 0.2rem 0.6rem 0 0;
+    background: linear-gradient(135deg, var(--gold) 0%, #fcfaf0 50%, var(--gold-soft) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 2px 12px color-mix(in srgb, var(--gold) 25%, transparent);
+  }
+
+  /* Elegant pull-quote with large quotation marks */
+  .pull-quote {
+    position: relative;
+    padding: 0.5rem 0 0.5rem 2rem;
+  }
+  .pull-quote::before {
+    content: "\201C";
+    position: absolute;
+    left: -0.2rem;
+    top: -1.8rem;
+    font-family: Georgia, serif;
+    font-size: 5rem;
+    line-height: 1;
+    color: var(--gold);
+    opacity: 0.35;
+  }
+
+  /* Refined card with gold corner accent on hover */
+  .card-elevated {
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1),
+                box-shadow 0.4s ease, border-color 0.4s ease;
+  }
+  .card-elevated::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 2.5rem;
+    height: 2.5rem;
+    background: linear-gradient(225deg, color-mix(in srgb, var(--gold) 30%, transparent) 0%, transparent 60%);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    pointer-events: none;
+  }
+  .card-elevated:hover::after {
+    opacity: 1;
+  }
+
+  /* Gold-traced frame for images */
+  .gold-frame {
+    position: relative;
+  }
+  .gold-frame::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(135deg, var(--gold) 0%, transparent 30%, transparent 70%, var(--gold-soft) 100%);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+    opacity: 0.6;
+  }
+
+  /* Staff lines texture — subtle pentagram background for sections */
+  .staff-texture {
+    position: relative;
+  }
+  .staff-texture::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background-image: repeating-linear-gradient(
+      to bottom,
+      transparent 0,
+      transparent 11px,
+      color-mix(in srgb, var(--gold) 12%, transparent) 11px,
+      color-mix(in srgb, var(--gold) 12%, transparent) 12px
+    );
+    background-size: 100% 60px;
+    opacity: 0.08;
+    mask: linear-gradient(to bottom, transparent, black 30%, black 70%, transparent);
+    -webkit-mask: linear-gradient(to bottom, transparent, black 30%, black 70%, transparent);
+  }
+
+  /* Parchment paper texture — warm aged paper feel */
+  .parchment-bg {
+    background-color: var(--pergamino);
+    background-image:
+      radial-gradient(circle at 20% 30%, color-mix(in srgb, var(--terracota) 6%, transparent), transparent 40%),
+      radial-gradient(circle at 80% 70%, color-mix(in srgb, var(--gold) 8%, transparent), transparent 40%);
+  }
+
+  /* Terracota accent text */
+  .text-terracota {
+    color: var(--terracota);
+  }
+
+  /* Buttons */
+  .btn-gold {
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-8 py-3.5 text-xs font-semibold uppercase tracking-[0.15em] transition-all duration-300;
+    font-family: var(--font-display), serif;
+    background: var(--gold);
+    color: var(--ink);
+    box-shadow: 0 0 20px color-mix(in srgb, var(--gold) 35%, transparent);
+  }
+  .btn-gold:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 0 30px color-mix(in srgb, var(--gold) 55%, transparent);
+    background: #fff;
+  }
+
+  .btn-outline-gold {
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-8 py-3.5 text-xs font-semibold uppercase tracking-[0.15em] transition-all duration-300;
+    font-family: var(--font-display), serif;
+    background: transparent;
+    border: 1px solid var(--gold);
+    color: var(--foreground);
+  }
+  .btn-outline-gold:hover {
+    background: color-mix(in srgb, var(--gold) 12%, transparent);
+    transform: translateY(-3px);
+  }
+
+  /* Focus ring for accessibility */
+  .focus-gold:focus-visible {
+    outline: 2px solid var(--gold);
+    outline-offset: 3px;
+  }
+}
+
+/* ============ Keyframe animations ============ */
+@keyframes gold-shine {
+  to {
+    background-position: 200% center;
+  }
+}
+
+@keyframes ink-drip {
+  0% {
+    transform: translateY(0);
+    opacity: 0;
+  }
+  15% {
+    opacity: 1;
+  }
+  85% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(24px);
+    opacity: 0;
+  }
+}
+
+@keyframes quill-breathe {
+  0%, 100% {
+    transform: rotate(-15deg) scale(1);
+  }
+  50% {
+    transform: rotate(-13deg) scale(1.03);
+  }
+}
+
+@keyframes float-particle {
+  0% {
+    transform: translateY(0) translateX(0);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.6;
+  }
+  90% {
+    opacity: 0.4;
+  }
+  100% {
+    transform: translateY(-100vh) translateX(40px);
+    opacity: 0;
+  }
+}
+
+@keyframes scroll-bounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateX(-50%) translateY(0);
+  }
+  40% {
+    transform: translateX(-50%) translateY(-10px);
+  }
+  60% {
+    transform: translateX(-50%) translateY(-5px);
+  }
+}
+
+/* Premium loader animations */
+@keyframes loader-fade-in {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes loader-drop {
+  0%, 100% { transform: translateY(0); opacity: 0.3; }
+  50% { transform: translateY(8px); opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .loader-drops { display: none; }
+  .loader-drops span { animation: none; }
+}
+
+@keyframes globe-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes pulse-ring {
+  0% {
+    transform: scale(0.9);
+    opacity: 0.7;
+  }
+  70% {
+    transform: scale(1.6);
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Hero entrance animations (replace framer-motion) */
+@keyframes hero-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes hero-fade-up-sm {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes hero-scale-x {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@keyframes subtitle-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.hero-anim-eyebrow {
+  animation: hero-fade-up-sm 0.8s ease-out both;
+}
+.hero-anim-title {
+  animation: hero-fade-up 1s cubic-bezier(0.16, 1, 0.3, 1) 0.1s both;
+}
+.hero-anim-rule {
+  animation: hero-scale-x 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.6s both;
+}
+.hero-anim-subtitle {
+  animation: subtitle-in 0.6s ease-out both;
+}
+.hero-anim-buttons {
+  animation: hero-fade-up 0.8s ease-out 0.5s both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-anim-eyebrow,
+  .hero-anim-title,
+  .hero-anim-rule,
+  .hero-anim-subtitle,
+  .hero-anim-buttons {
+    animation: none;
+  }
+}
+
+/* ============ Reduced motion ============ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Hide scrollbar for the manifiesto horizontal slider */
+.snap-x::-webkit-scrollbar {
+  display: none;
+}
+
+/* ============ Custom scrollbar ============ */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: color-mix(in srgb, var(--gold) 40%, transparent);
+  border-radius: 10px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--gold);
+  background-clip: padding-box;
+}
