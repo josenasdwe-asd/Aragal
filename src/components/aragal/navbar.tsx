@@ -53,8 +53,8 @@ export function Navbar() {
       className={cn(
         "fixed left-1/2 top-4 z-50 flex h-16 w-[92%] max-w-6xl -translate-x-1/2 items-center justify-between rounded-2xl px-4 transition-all duration-500 sm:px-6",
         scrolled
-          ? "glass shadow-lg backdrop-blur-xl"
-          : "border border-transparent backdrop-blur-sm"
+          ? "border border-transparent backdrop-blur-sm"
+          : "border border-transparent"
       )}
       aria-label="Navegación principal"
     >
