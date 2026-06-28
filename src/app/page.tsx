@@ -20,9 +20,9 @@ import { AdminPanelLazy } from "@/components/admin/admin-panel-lazy";
 import { CustomCursor } from "@/components/aragal/custom-cursor";
 import { PremiumLoader } from "@/components/aragal/premium-loader";
 
-// Force dynamic rendering — the page fetches from Supabase at request time,
-// so it can't be statically generated at build time.
-export const dynamic = "force-dynamic";
+// ISR: cache the page for 60 seconds, then revalidate with fresh Supabase data.
+// This is much better than force-dynamic (no caching) for performance.
+export const revalidate = 60;
 
 export default function Home() {
   return (

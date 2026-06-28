@@ -25,6 +25,26 @@ const nextConfig: NextConfig = {
           },
         ],
       },
+      {
+        // Cache videos for 1 year (they have versioned names).
+        source: "/assets/video/:path*",
+        headers: [
+          {
+            key: "Cache-Control",
+            value: "public, max-age=31536000, immutable",
+          },
+        ],
+      },
+      {
+        // Cache static images for 1 year.
+        source: "/assets/images/:path*",
+        headers: [
+          {
+            key: "Cache-Control",
+            value: "public, max-age=31536000, immutable",
+          },
+        ],
+      },
     ];
   },
 };

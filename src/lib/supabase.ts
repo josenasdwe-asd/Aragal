@@ -31,11 +31,17 @@ function getClient(): SupabaseClient {
 /**
  * Proxy that lazily creates the Supabase client on first property access.
  * This allows the module to be imported at build time without throwing.
+ * Uses `as unknown as` to satisfy TypeScript's strict type checking.
  */
-export const supabaseAdmin = new Proxy({} as SupabaseClient, {
-  get(_target, prop) {
-    const client = getClient();
-    const value = (client as never)[prop as string];
-    return typeof value === "function" ? value.bind(client) : value;
-  },
-});
+export const supabaseAdmin = new Proxy(
+  {},
+  {
+    get(_target, prop) {
+      const client = getClient();
+      const value = (client as unknown as Record<string | symbol, unknown>)[prop];
+      return typeof value === "function"
+        ? (value as (...args: unknown[]) => unknown).bind(client)
+        : value;
+    },
+  }
+) as unknown as SupabaseClient;
