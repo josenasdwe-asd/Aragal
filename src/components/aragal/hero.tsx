@@ -92,7 +92,7 @@ export function Hero() {
         loop
         playsInline
         preload="auto"
-        className="absolute inset-0 h-full w-full object-cover object-left sm:object-contain md:object-contain lg:object-cover lg:object-center"
+        className="absolute inset-0 h-full w-full object-cover object-center sm:object-contain sm:object-center md:object-contain md:object-center lg:object-cover lg:object-center"
         poster="/assets/images/hero-bg.webp"
         aria-hidden="true"
       >
