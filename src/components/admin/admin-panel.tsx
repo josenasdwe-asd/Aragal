@@ -17,6 +17,7 @@ import {
   Newspaper,
   Video,
   Award,
+  Mail,
   type LucideIcon,
 } from "lucide-react";
 import {
@@ -42,6 +43,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { useToast } from "@/hooks/use-toast";
 import { ADMIN_TOKEN_STORAGE_KEY } from "@/lib/admin-token";
 import { EntityEditor } from "./entity-editor";
+import { MessagesViewer, SubscribersViewer } from "./messages-viewer";
 
 /**
  * Inline admin panel.
@@ -73,7 +75,9 @@ type EntityId =
   | "gallery"
   | "news"
   | "videos"
-  | "press";
+  | "press"
+  | "messages"
+  | "subscribers";
 
 const ENTITIES: {
   id: EntityId;
@@ -134,6 +138,18 @@ const ENTITIES: {
     label: "Prensa",
     description: "Prensa, plataformas y reconocimientos",
     icon: Award,
+  },
+  {
+    id: "messages",
+    label: "Mensajes",
+    description: "Mensajes del formulario de contacto",
+    icon: Mail,
+  },
+  {
+    id: "subscribers",
+    label: "Suscriptores",
+    description: "Emails del newsletter",
+    icon: Users,
   },
 ];
 
@@ -419,7 +435,13 @@ export function AdminPanel() {
                   </Button>
                 </div>
                 <div className="min-h-0 flex-1">
-                  <EntityEditor entity={selectedEntity} />
+                  {selectedEntity === "messages" ? (
+                    <MessagesViewer onBack={() => setSelectedEntity(null)} />
+                  ) : selectedEntity === "subscribers" ? (
+                    <SubscribersViewer onBack={() => setSelectedEntity(null)} />
+                  ) : (
+                    <EntityEditor entity={selectedEntity} />
+                  )}
                 </div>
               </div>
             ) : (
