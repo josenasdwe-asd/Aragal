@@ -11,21 +11,28 @@ type Props = {
 };
 
 /**
- * Gallery — horizontal editorial carousel.
+ * Gallery — horizontal editorial carousel with drag-to-scroll.
  *
- * Images scroll horizontally with snap-mandatory. Navigation via:
- *   - Horizontal scroll (trackpad/mouse)
+ * Navigation via:
+ *   - Drag to scroll (mousedown + mousemove) on desktop
+ *   - Horizontal scroll (trackpad/mouse wheel)
  *   - Arrow buttons (desktop)
- *   - Swipe (mobile)
+ *   - Swipe (mobile, native touch scroll)
  *   - Keyboard arrows (when section is in view)
  *
- * Clicking an image opens the lightbox (preserved from the previous version).
+ * Clicking an image opens the lightbox.
  */
 export function GalleryClient({ items }: Props) {
   const [index, setIndex] = useState<number | null>(null);
   const [zoomed, setZoomed] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
+
+  // Drag-to-scroll state
+  const isDragging = useRef(false);
+  const startX = useRef(0);
+  const scrollLeftStart = useRef(0);
+  const hasDragged = useRef(false);
 
   const close = useCallback(() => {
     setIndex(null);
@@ -58,6 +65,39 @@ export function GalleryClient({ items }: Props) {
     const idx = Math.round(container.scrollLeft / slideWidth);
     setActiveIndex(Math.max(0, Math.min(idx, items.length - 1)));
   }, [items.length]);
+
+  // Drag-to-scroll handlers (desktop)
+  const onMouseDown = useCallback((e: React.MouseEvent) => {
+    const container = scrollRef.current;
+    if (!container) return;
+    isDragging.current = true;
+    hasDragged.current = false;
+    startX.current = e.pageX - container.offsetLeft;
+    scrollLeftStart.current = container.scrollLeft;
+    container.style.cursor = "grabbing";
+    container.style.scrollBehavior = "auto";
+  }, []);
+
+  const onMouseMove = useCallback((e: React.MouseEvent) => {
+    if (!isDragging.current) return;
+    e.preventDefault();
+    const container = scrollRef.current;
+    if (!container) return;
+    const x = e.pageX - container.offsetLeft;
+    const walk = x - startX.current;
+    if (Math.abs(walk) > 5) hasDragged.current = true;
+    container.scrollLeft = scrollLeftStart.current - walk;
+  }, []);
+
+  const onMouseUp = useCallback(() => {
+    if (!isDragging.current) return;
+    isDragging.current = false;
+    const container = scrollRef.current;
+    if (container) {
+      container.style.cursor = "grab";
+      container.style.scrollBehavior = "smooth";
+    }
+  }, []);
 
   useEffect(() => {
     if (index === null) return;
@@ -106,8 +146,12 @@ export function GalleryClient({ items }: Props) {
         <div
           ref={scrollRef}
           onScroll={onScroll}
+          onMouseDown={onMouseDown}
+          onMouseMove={onMouseMove}
+          onMouseUp={onMouseUp}
+          onMouseLeave={onMouseUp}
           className="flex snap-x snap-mandatory gap-4 overflow-x-auto scroll-smooth px-[5vw] pb-4"
-          style={{ scrollbarWidth: "none" }}
+          style={{ scrollbarWidth: "none", cursor: "grab", userSelect: "none" }}
         >
           {items.map((item, i) => (
             <div
@@ -117,7 +161,14 @@ export function GalleryClient({ items }: Props) {
             >
               <button
                 type="button"
-                onClick={() => setIndex(i)}
+                onClick={() => {
+                  // Prevent click after drag
+                  if (hasDragged.current) {
+                    hasDragged.current = false;
+                    return;
+                  }
+                  setIndex(i);
+                }}
                 aria-label={`Abrir imagen: ${item.caption}`}
                 className="focus-gold relative block aspect-[3/4] w-full overflow-hidden rounded-xl border"
                 style={{ borderColor: "var(--glass-border)" }}
