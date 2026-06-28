@@ -16,7 +16,7 @@ export function ThemeToggle() {
         const isDark = document.documentElement.classList.contains("dark");
         setTheme(isDark ? "light" : "dark");
       }}
-      className="focus-gold fixed bottom-6 right-6 z-[70] flex h-14 w-14 items-center justify-center rounded-full border-2 shadow-lg transition-all duration-300 hover:scale-110"
+      className="focus-gold fixed bottom-4 right-4 z-[70] flex h-10 w-10 items-center justify-center rounded-full border-2 shadow-lg transition-all duration-300 hover:scale-110 sm:bottom-6 sm:right-6 sm:h-14 sm:w-14"
       style={{
         borderColor: "var(--gold)",
         background: "rgba(10,10,10,0.8)",
@@ -34,12 +34,12 @@ export function ThemeToggle() {
       {/* Both icons rendered; CSS toggles based on .dark so there is no
           hydration flash and no dependency on resolvedTheme during render. */}
       <Sun
-        className="hidden h-5 w-5 dark:block"
+        className="hidden h-4 w-4 dark:block sm:h-5 sm:w-5"
         style={{ color: "var(--gold)" }}
         strokeWidth={1.8}
       />
       <Moon
-        className="block h-5 w-5 dark:hidden"
+        className="block h-4 w-4 dark:hidden sm:h-5 sm:w-5"
         style={{ color: "var(--gold)" }}
         strokeWidth={1.8}
       />
