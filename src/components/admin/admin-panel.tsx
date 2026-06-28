@@ -143,6 +143,10 @@ export function AdminPanel() {
   const [isAdmin, setIsAdmin] = useState<boolean | null>(null);
   const [sheetOpen, setSheetOpen] = useState(false);
   const [loginOpen, setLoginOpen] = useState(false);
+  const [showPasswordDialog, setShowPasswordDialog] = useState(false);
+  const [pwCurrent, setPwCurrent] = useState("");
+  const [pwNew, setPwNew] = useState("");
+  const [pwBusy, setPwBusy] = useState(false);
   const [password, setPassword] = useState("");
   const [loginBusy, setLoginBusy] = useState(false);
   const [selectedEntity, setSelectedEntity] = useState<EntityId | null>(null);
@@ -496,22 +500,132 @@ export function AdminPanel() {
             className="border-t p-3"
             style={{ borderColor: "var(--glass-border)" }}
           >
-            <Button
-              variant="outline"
-              className="w-full border-2 font-semibold transition-all hover:scale-[1.01]"
-              onClick={handleLogout}
-              style={{
-                borderColor: "color-mix(in srgb, var(--gold) 55%, transparent)",
-                color: "var(--gold)",
-                background: "color-mix(in srgb, var(--gold) 8%, transparent)",
-              }}
-            >
-              <LogOut className="mr-2 h-4 w-4" />
-              Cerrar sesión
-            </Button>
+            <div className="flex gap-2">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => setShowPasswordDialog(true)}
+                className="border-2 transition-all hover:scale-[1.01]"
+                style={{
+                  borderColor: "var(--glass-border)",
+                  color: "var(--muted-foreground)",
+                }}
+              >
+                <Lock className="mr-1.5 h-3.5 w-3.5" />
+                Contraseña
+              </Button>
+              <Button
+                variant="outline"
+                className="flex-1 border-2 font-semibold transition-all hover:scale-[1.01]"
+                onClick={handleLogout}
+                style={{
+                  borderColor: "color-mix(in srgb, var(--gold) 55%, transparent)",
+                  color: "var(--gold)",
+                  background: "color-mix(in srgb, var(--gold) 8%, transparent)",
+                }}
+              >
+                <LogOut className="mr-2 h-4 w-4" />
+                Cerrar sesión
+              </Button>
+            </div>
           </SheetFooter>
         </SheetContent>
       </Sheet>
+
+      {/* Change password dialog */}
+      <Dialog open={showPasswordDialog} onOpenChange={setShowPasswordDialog}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2">
+              <Lock className="h-4 w-4" style={{ color: "var(--gold)" }} />
+              Cambiar contraseña
+            </DialogTitle>
+            <DialogDescription>
+              Actualiza la contraseña de administrador. Mínimo 8 caracteres.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="space-y-3">
+            <div>
+              <Label className="text-xs">Contraseña actual</Label>
+              <Input
+                type="password"
+                value={pwCurrent}
+                onChange={(e) => setPwCurrent(e.target.value)}
+                placeholder="••••••••"
+                className="mt-1"
+              />
+            </div>
+            <div>
+              <Label className="text-xs">Nueva contraseña</Label>
+              <Input
+                type="password"
+                value={pwNew}
+                onChange={(e) => setPwNew(e.target.value)}
+                placeholder="Mínimo 8 caracteres"
+                className="mt-1"
+              />
+            </div>
+          </div>
+          <DialogFooter>
+            <Button
+              variant="outline"
+              onClick={() => {
+                setShowPasswordDialog(false);
+                setPwCurrent("");
+                setPwNew("");
+              }}
+            >
+              Cancelar
+            </Button>
+            <Button
+              disabled={pwBusy || !pwCurrent || !pwNew || pwNew.length < 8}
+              onClick={async () => {
+                setPwBusy(true);
+                try {
+                  const token = window.localStorage.getItem("aragal_admin_token");
+                  const res = await fetch("/api/admin/change-password", {
+                    method: "POST",
+                    headers: {
+                      "Content-Type": "application/json",
+                      ...(token ? { Authorization: `Bearer ${token}` } : {}),
+                    },
+                    body: JSON.stringify({
+                      currentPassword: pwCurrent,
+                      newPassword: pwNew,
+                    }),
+                  });
+                  const data = await res.json();
+                  if (!res.ok || !data.ok) {
+                    toast({
+                      title: "Error",
+                      description: data.error ?? "No se pudo cambiar",
+                      variant: "destructive",
+                    });
+                    return;
+                  }
+                  toast({
+                    title: "Contraseña actualizada",
+                    description: "Para producción, actualízala también en Vercel Dashboard.",
+                  });
+                  setShowPasswordDialog(false);
+                  setPwCurrent("");
+                  setPwNew("");
+                } catch {
+                  toast({
+                    title: "Error de red",
+                    variant: "destructive",
+                  });
+                } finally {
+                  setPwBusy(false);
+                }
+              }}
+              style={{ background: "var(--gold)", color: "#0a0a0a" }}
+            >
+              {pwBusy ? "Actualizando..." : "Cambiar"}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </>
   );
 }
