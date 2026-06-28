@@ -98,7 +98,7 @@ export function Hero() {
       >
         {/* CSS media query picks the right source: vertical for mobile,
             horizontal for desktop. */}
-        <source src="/assets/video/hero-loop-mobile-v2.mp4" type="video/mp4" media="(max-width: 767px)" />
+        <source src="/assets/video/hero-loop-mobile-v2.mp4" type="video/mp4" media="(max-width: 1023px)" />
         <source src="/assets/video/hero-loop.mp4" type="video/mp4" />
       </video>
       {/* Hidden img for SEO/alt text (the video poster handles the visual) */}
