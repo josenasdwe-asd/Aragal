@@ -6,6 +6,6 @@ export default function robots(): MetadataRoute.Robots {
       userAgent: "*",
       allow: "/",
     },
-    sitemap: "https://aragal.vercel.app/sitemap.xml",
+    sitemap: "https://marioaravena.cl/sitemap.xml",
   };
 }

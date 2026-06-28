@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const base = "https://aragal.vercel.app";
+  const base = "https://marioaravena.cl";
   const sections = ["", "#bio", "#musica", "#videos", "#galeria", "#noticias", "#contacto"];
   return sections.map((s) => ({
     url: `${base}/${s}`,

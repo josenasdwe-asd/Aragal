@@ -18,7 +18,7 @@ export function StructuredData() {
       "Spiritual Music",
       "Salsa",
     ],
-    url: "https://aragal.vercel.app",
+    url: "https://marioaravena.cl",
     foundingDate: "2000",
     foundingLocation: {
       "@type": "Place",

@@ -21,9 +21,9 @@ const cormorant = Cormorant_Garamond({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://aragal.vercel.app/"),
+  metadataBase: new URL("https://marioaravena.cl/"),
   alternates: {
-    canonical: "https://aragal.vercel.app/",
+    canonical: "https://marioaravena.cl/",
   },
   title: "ARAGAL — Mario Aravena | Compositor y Productor Musical",
   description:
@@ -46,7 +46,7 @@ export const metadata: Metadata = {
     title: "ARAGAL — Mario Aravena | Compositor Musical",
     description:
       "Descubre la música de ARAGAL: composiciones con sabor cubano, música espiritual y colaboraciones internacionales.",
-    url: "https://aragal.vercel.app/",
+    url: "https://marioaravena.cl/",
     siteName: "ARAGAL",
     locale: "es_ES",
     type: "website",
