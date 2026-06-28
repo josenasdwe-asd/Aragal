@@ -68,7 +68,7 @@ export function CollaborationsClient({ items }: Props) {
                   </span>
 
                   {/* Artist thumbnail — circular, 56px */}
-                  <div className="relative h-14 w-14 flex-shrink-0 overflow-hidden rounded-full border-2 sm:h-16 sm:w-16" style={{ borderColor: open ? "var(--gold)" : "color-mix(in srgb, var(--gold) 30%, transparent)" }}>
+                  <div className="relative h-20 w-20 flex-shrink-0 overflow-hidden rounded-full border-2 sm:h-24 sm:w-24" style={{ borderColor: open ? "var(--gold)" : "color-mix(in srgb, var(--gold) 30%, transparent)" }}>
                     {c.imageUrl ? (
                       <Image
                         src={c.imageUrl}
